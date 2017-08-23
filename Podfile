@@ -6,7 +6,7 @@ target 'Avatars' do
   use_frameworks!
 
   # Pods for Avatars
-  	pod "Texture", :git => "https://github.com/texturegroup/texture.git", :branch => "master"
+  	pod "Texture", :git => "https://github.com/texturegroup/texture.git", :commit => 'ccc5786'
   	pod 'Birdsong', '~> 0.5'
   	pod 'RxSwift',    '~> 3.0'
     pod 'RxCocoa',    '~> 3.0'

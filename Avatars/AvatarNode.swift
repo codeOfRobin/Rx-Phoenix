@@ -48,7 +48,12 @@ class AvatarNode: ASCellNode {
 	
 	init(_ avatar: Avatar, sizeClass: AvatarSizeClass) {
 		super.init()
-		self.automaticallyManagesSubnodes = true
+		self.addSubnode(imageNode)
+		self.addSubnode(onlineNode)
+		onlineNode.backgroundColor = UIColor(red:0.32, green:0.67, blue:0.38, alpha:1.00)
+		onlineNode.layer.cornerRadius = 5.0
+		onlineNode.layer.borderWidth = 1.0
+		onlineNode.layer.borderColor = UIColor.white.cgColor
 		self.setAvatar(avatar, sizeClass: sizeClass)
 	}
 	
@@ -67,25 +72,21 @@ class AvatarNode: ASCellNode {
 	
 	override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
 		let stack = ASStackLayoutSpec(direction: .horizontal, spacing: 0.0, justifyContent: .start, alignItems: .center, children: [imageNode])
-		return ASInsetLayoutSpec(insets: UIEdgeInsets.init(top: 4, left: 4, bottom: 4, right: 4), child: stack)
+		return ASInsetLayoutSpec(insets: UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5), child: stack)
 	}
 	
-	override func nodeDidLayout() {
-		switch imageNode.frame.width {
-		case 0..<12:
-			//set frame of online indicator here
-			break
-		default:
-			//other cases
-			break
-		}
+	override func layoutDidFinish() {
+		super.layoutDidFinish()
+		onlineNode.frame = CGRect(x: imageNode.frame.maxX - 5, y: imageNode.frame.maxY - 5, width: 10, height: 10)
 	}
 	
 	override func didEnterDisplayState() {
+		super.didEnterDisplayState()
 		print("entered")
 	}
 	
 	override func didExitHierarchy() {
+		super.didExitHierarchy()
 		print("exited")
 	}
 }

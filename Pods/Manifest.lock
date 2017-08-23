@@ -32,16 +32,16 @@ DEPENDENCIES:
   - Birdsong (~> 0.5)
   - RxCocoa (~> 3.0)
   - RxSwift (~> 3.0)
-  - Texture (from `https://github.com/texturegroup/texture.git`, branch `master`)
+  - Texture (from `https://github.com/texturegroup/texture.git`, commit `ccc5786`)
 
 EXTERNAL SOURCES:
   Texture:
-    :branch: master
+    :commit: ccc5786
     :git: https://github.com/texturegroup/texture.git
 
 CHECKOUT OPTIONS:
   Texture:
-    :commit: 16ce3c9a33e83b50a01323e93963a1a584939b33
+    :commit: ccc5786
     :git: https://github.com/texturegroup/texture.git
 
 SPEC CHECKSUMS:
@@ -54,6 +54,6 @@ SPEC CHECKSUMS:
   Starscream: ce7a202d95615bd4113bc5a0f1932f1db8c808a4
   Texture: a5526314780eab35f642d956627f09316b9514e8
 
-PODFILE CHECKSUM: e51574e1d7a7d826ad3bb8eb821285a80e2a84a5
+PODFILE CHECKSUM: 55ee306f348509a09a110745a5b1bc37996dd401
 
 COCOAPODS: 1.2.1

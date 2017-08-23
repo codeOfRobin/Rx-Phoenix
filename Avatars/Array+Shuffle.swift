@@ -15,16 +15,16 @@ extension Sequence {
 		result.shuffle()
 		return result
 	}
-	
-	func repeatn(times: Int) -> [Element] {
-		let x = (0..<times).map {
-			_ in
-			return self
-		}
-		return Array(x.joined())
-	}
 
 }
+
+func *<T>(left: Array<T>, right: Int) -> Array<T> {
+	return Array((0..<right).map {
+		_ in
+		return left
+	}.joined())
+}
+
 
 extension MutableCollection {
 	/// Shuffles the contents of this collection.
