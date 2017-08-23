@@ -1,0 +1,6 @@
+framework module Pods_Avatars {
+  umbrella header "Pods-Avatars-umbrella.h"
+
+  export *
+  module * { export * }
+}

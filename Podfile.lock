@@ -1,0 +1,59 @@
+PODS:
+  - Birdsong (0.5.2):
+    - Starscream (= 2.0.1)
+  - PINCache (3.0.1-beta.5):
+    - PINCache/Arc-exception-safe (= 3.0.1-beta.5)
+    - PINCache/Core (= 3.0.1-beta.5)
+  - PINCache/Arc-exception-safe (3.0.1-beta.5):
+    - PINCache/Core
+  - PINCache/Core (3.0.1-beta.5):
+    - PINOperation (= 1.0.3)
+  - PINOperation (1.0.3)
+  - PINRemoteImage/Core (3.0.0-beta.11):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.0-beta.11):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.0-beta.11):
+    - PINCache (= 3.0.1-beta.5)
+    - PINRemoteImage/Core
+  - RxCocoa (3.6.1):
+    - RxSwift (~> 3.6)
+  - RxSwift (3.6.1)
+  - Starscream (2.0.1)
+  - Texture (2.4):
+    - Texture/PINRemoteImage (= 2.4)
+  - Texture/Core (2.4)
+  - Texture/PINRemoteImage (2.4):
+    - PINRemoteImage/iOS (= 3.0.0-beta.11)
+    - PINRemoteImage/PINCache
+    - Texture/Core
+
+DEPENDENCIES:
+  - Birdsong (~> 0.5)
+  - RxCocoa (~> 3.0)
+  - RxSwift (~> 3.0)
+  - Texture (from `https://github.com/texturegroup/texture.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  Texture:
+    :branch: master
+    :git: https://github.com/texturegroup/texture.git
+
+CHECKOUT OPTIONS:
+  Texture:
+    :commit: 16ce3c9a33e83b50a01323e93963a1a584939b33
+    :git: https://github.com/texturegroup/texture.git
+
+SPEC CHECKSUMS:
+  Birdsong: 9ba3983693609813270fbb4aee5484abddc1ea30
+  PINCache: 98e7b1ef782824ad231ade51987c218b758c30d8
+  PINOperation: ac23db44796d4a564ecf9b5ea7163510f579b71d
+  PINRemoteImage: d71988f11914a050d6d4cf51efc4ad1de8c0a9d8
+  RxCocoa: 84a08739ab186248c7f31ce4ee92d6f8a947d690
+  RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
+  Starscream: ce7a202d95615bd4113bc5a0f1932f1db8c808a4
+  Texture: a5526314780eab35f642d956627f09316b9514e8
+
+PODFILE CHECKSUM: e51574e1d7a7d826ad3bb8eb821285a80e2a84a5
+
+COCOAPODS: 1.2.1
