@@ -14,7 +14,7 @@ struct AvatarStub {
 	let initials: String
 }
 
-let avatarStubs: [Int: AvatarStub] = {
+let globalAvatarStore: [Int: AvatarStub] = {
 	let avatarStubs: [URL] = ["https://kayako-mobile-testing.kayako.com/avatar/get/4ab8da0f-74f1-55f8-ae68-6925a1ac3a2c?1503057670",
 	  "https://kayako-mobile-testing.kayako.com/avatar/get/a834f117-6a98-5308-9cbd-807f31b5a752?1503044482",
 	  "https://kayako-mobile-testing.kayako.com/avatar/get/7c2ca881-6531-5175-82ea-f0912029a46c?1502943729",

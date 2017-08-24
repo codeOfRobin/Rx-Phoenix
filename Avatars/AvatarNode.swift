@@ -13,25 +13,39 @@ enum AvatarSizeClass {
 	case medium
 	case small
 	case micro
+	case nano
 	
 	var preferredEdgeLength: CGFloat {
 		get {
 			switch self {
 			case .large:
-				return 52
+				return 48
 			case .medium:
 				return 42
 			case .small:
-				return 11
+				return 24
 			case .micro:
-				return 9
+				return 18
+			case .nano:
+				return 16
 			}
 		}
 	}
 	
 	var preferredCornerRadius: CGFloat {
 		get {
-			return 3.0
+			switch self {
+			case .large:
+				return 12
+			case .medium:
+				return 11
+			case .small:
+				return 10
+			case .micro:
+				return 9
+			case .nano:
+				return 8
+			}
 		}
 	}
 }
@@ -45,8 +59,10 @@ class AvatarNode: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode()
 	let onlineNode = ASDisplayNode()
+	let initials: String
 	
-	init(_ avatar: Avatar, sizeClass: AvatarSizeClass) {
+	init(_ avatar: Avatar, sizeClass: AvatarSizeClass, initials: String) {
+		self.initials = initials
 		super.init()
 		self.addSubnode(imageNode)
 		self.addSubnode(onlineNode)
@@ -80,14 +96,15 @@ class AvatarNode: ASCellNode {
 		onlineNode.frame = CGRect(x: imageNode.frame.maxX - 5, y: imageNode.frame.maxY - 5, width: 10, height: 10)
 	}
 	
-	override func didEnterDisplayState() {
-		super.didEnterDisplayState()
-		print("entered")
+	override func didEnterPreloadState() {
+		super.didEnterPreloadState()
+		print("entered \(initials)")
 	}
+	
 	
 	override func didExitHierarchy() {
 		super.didExitHierarchy()
-		print("exited")
+		print("exit \(initials)")
 	}
 }
 

@@ -24,6 +24,14 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 	
 	var onlineObservers: [Int: PublishSubject<Bool>] = [:]
 	
+	let avatarStubs: [AvatarStub] = {
+		return (globalAvatarStore.reduce([], { (arr, pair) -> [AvatarStub] in
+			
+			let (key, value) = pair
+			return arr + [value]
+		}) * 10).shuffled()
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -36,7 +44,7 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-		return AvatarNode(.url(avatarStubs[indexPath.row]!.url), sizeClass: sizeClassToDisplay)
+		return AvatarNode(.url(avatarStubs[indexPath.row].url), sizeClass: sizeClassToDisplay, initials: avatarStubs[indexPath.row].initials)
 	}
 	
 	func numberOfSections(in tableNode: ASTableNode) -> Int {
