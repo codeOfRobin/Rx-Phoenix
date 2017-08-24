@@ -48,8 +48,20 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 		
 		tableNode.leadingScreensForBatching = 2.0
 		
-		subscriptionCounter.subscriptionBroadcast.debounce(3, scheduler: MainScheduler()).subscribe(onNext: { (ids) in
-			print(ids)
+		Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (_) in
+			guard let subjects = self?.onlineObservers else {
+				return
+			}
+			for (_, subject) in subjects {
+				subject.onNext(Bool.random() == false ? .offline : .online)
+			}
+		}
+		
+		subscriptionCounter.subscriptionBroadcast.debounce(3, scheduler: MainScheduler()).single().subscribe(onNext: { [weak self] (ids) in
+			for id in ids {
+				self?.onlineObservers[id] = PublishSubject<OnlineState>()
+			}
+			self?.tableNode.reloadData()
 		}, onDisposed: {
 			print("disposed")
 		}).disposed(by: disposeBag)
@@ -122,6 +134,10 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 		}()
 		
 		self.sizeClassToDisplay = sizeClass
+	}
+	
+	deinit {
+		print("deinited")
 	}
 	
 }

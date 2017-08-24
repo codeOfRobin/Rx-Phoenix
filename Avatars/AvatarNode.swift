@@ -140,7 +140,7 @@ class AvatarNode: ASCellNode {
 	
 	override func layout() {
 		super.layout()
-		
+
 		onlineNode.layer.cornerRadius = sizeClass.preferredOnlineIndicatorSize/2
 		onlineNode.layer.borderWidth = 2.0
 		onlineNode.frame = CGRect(x: imageNode.frame.maxX - sizeClass.preferredOnlineIndicatorSize/2, y: imageNode.frame.maxY - sizeClass.preferredOnlineIndicatorSize/2, width: sizeClass.preferredOnlineIndicatorSize, height: sizeClass.preferredOnlineIndicatorSize)
