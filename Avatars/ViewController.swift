@@ -11,6 +11,10 @@ import RxSwift
 import Birdsong
 import AsyncDisplayKit
 
+enum OnlineState {
+	case offline
+	case online
+}
 
 class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 
@@ -22,7 +26,7 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 		}
 	}
 	
-	var onlineObservers: [Int: PublishSubject<Bool>] = [:]
+	var onlineObservers: [Int: PublishSubject<OnlineState>] = [:]
 	
 	let avatarStubs: [AvatarStub] = {
 		return (globalAvatarStore.reduce([], { (arr, pair) -> [AvatarStub] in
@@ -44,7 +48,7 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-		return AvatarNode(.url(avatarStubs[indexPath.row].url), sizeClass: sizeClassToDisplay, initials: avatarStubs[indexPath.row].initials)
+		return AvatarNode(.url(avatarStubs[indexPath.row].url), sizeClass: sizeClassToDisplay, initials: avatarStubs[indexPath.row].initials, subscription: onlineObservers[avatarStubs[indexPath.row].id])
 	}
 	
 	func numberOfSections(in tableNode: ASTableNode) -> Int {
@@ -67,10 +71,11 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 
 	override var keyCommands: [UIKeyCommand]? {
 		return [
-			UIKeyCommand(input: "1", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "micro"),
-			UIKeyCommand(input: "2", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "small"),
-			UIKeyCommand(input: "3", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "medium"),
-			UIKeyCommand(input: "4", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "large"),
+			UIKeyCommand(input: "1", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "nano"),
+			UIKeyCommand(input: "2", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "micro"),
+			UIKeyCommand(input: "3", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "small"),
+			UIKeyCommand(input: "4", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "medium"),
+			UIKeyCommand(input: "5", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "large"),
 		]
 		
 	}
@@ -88,12 +93,14 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 			}
 			switch selected {
 			case 1:
-				return .micro
+				return .nano
 			case 2:
-				return .small
+				return .micro
 			case 3:
-				return .medium
+				return .small
 			case 4:
+				return .medium
+			case 5:
 				return .large
 			default:
 				return .large
