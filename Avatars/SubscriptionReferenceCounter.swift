@@ -43,7 +43,6 @@ class SubscriptionReferenceCounter {
 				dictionary.removeValue(forKey: id)
 			} else {
 				dictionary[id] = value - 1
-				print("decremented")
 			}
 		} else {
 			//: called if a deinit happens before a cell is preloaded. Popping the view controller, for example

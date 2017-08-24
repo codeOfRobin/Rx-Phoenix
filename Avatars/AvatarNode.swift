@@ -66,7 +66,9 @@ class AvatarNode: ASCellNode {
 	
 	var state: OnlineState = .offline {
 		didSet {
-			self.transitionLayout(withAnimation: true, shouldMeasureAsync: true, measurementCompletion: nil)
+			if oldValue != state {
+				self.transitionLayout(withAnimation: true, shouldMeasureAsync: true, measurementCompletion: nil)
+			}
 		}
 	}
 	
@@ -74,13 +76,15 @@ class AvatarNode: ASCellNode {
 	let subscriptionCounter: SubscriptionReferenceCounter?
 	let onlineSubscription: PublishSubject<OnlineState>?
 	let avatar: Avatar
+	let initials: String
 	
-	init(_ avatar: Avatar, sizeClass: AvatarSizeClass, id: Int, onlineSubscription: PublishSubject<OnlineState>? = nil, subscriptionCounter: SubscriptionReferenceCounter? = nil) {
+	init(_ avatar: Avatar, initials: String, sizeClass: AvatarSizeClass, id: Int, onlineSubscription: PublishSubject<OnlineState>? = nil, subscriptionCounter: SubscriptionReferenceCounter? = nil) {
 		self.id = id
 		self.sizeClass = sizeClass
 		self.subscriptionCounter = subscriptionCounter
 		self.onlineSubscription = onlineSubscription
 		self.avatar = avatar
+		self.initials = initials
 		super.init()
 		
 		self.imageNode.style.width = ASDimensionMake(sizeClass.preferredEdgeLength)
@@ -100,6 +104,7 @@ class AvatarNode: ASCellNode {
 		
 		if let subscription = onlineSubscription {
 			subscription.subscribe(onNext: { [weak self] (state) in
+				print("\(self?.initials) is now \(state)")
 				self?.state = state
 				}, onDisposed: {
 					print("disposed")

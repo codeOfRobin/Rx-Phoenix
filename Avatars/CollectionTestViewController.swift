@@ -1,39 +1,31 @@
 //
-//  ViewController.swift
+//  CollectionTestViewController.swift
 //  Avatars
 //
-//  Created by Robin Malhotra on 22/08/17.
+//  Created by Robin Malhotra on 24/08/17.
 //  Copyright © 2017 Robin Malhotra. All rights reserved.
 //
 
-import UIKit
-import RxSwift
-import Birdsong
 import AsyncDisplayKit
+import RxSwift
 
-enum OnlineState {
-	case offline
-	case online
-}
+class CollectionTestViewController: UIViewController {
 
-class ViewController: UIViewController {
-
-	let tableNode = ASTableNode()
+	let collectionNode = ASCollectionNode.init(collectionViewLayout: UICollectionViewFlowLayout.init())
 	
 	let disposeBag = DisposeBag()
 	
 	var dataSource = AvatarSimulatedDataSource()
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 		
-		tableNode.dataSource = dataSource
-		self.view.addSubnode(tableNode)
-		tableNode.view.separatorStyle = .none
+		collectionNode.dataSource = dataSource
+		self.view.addSubnode(collectionNode)
 		
-		tableNode.leadingScreensForBatching = 2.0
+		collectionNode.leadingScreensForBatching = 2.0
 		
-		Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] (_) in
+		Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] (_) in
 			guard let subjects = self?.dataSource.onlineObservers else {
 				return
 			}
@@ -46,18 +38,17 @@ class ViewController: UIViewController {
 			for id in ids {
 				self?.dataSource.onlineObservers[id] = PublishSubject<OnlineState>()
 			}
-			self?.tableNode.reloadData()
-		}, onDisposed: {
-			print("disposed")
+			self?.collectionNode.reloadData()
+			}, onDisposed: {
+				print("disposed")
 		}).disposed(by: disposeBag)
-		
-		// Do any additional setup after loading the view, typically from a nib.
-	}
+        // Do any additional setup after loading the view.
+    }
 	
 	override func viewDidLayoutSubviews() {
-		tableNode.frame = view.frame
+		collectionNode.frame = view.frame
 	}
-
+	
 	override var keyCommands: [UIKeyCommand]? {
 		return [
 			UIKeyCommand(input: "1", modifierFlags: [], action: #selector(selectTab(sender:)), discoverabilityTitle: "nano"),
@@ -102,6 +93,5 @@ class ViewController: UIViewController {
 	deinit {
 		print("deinited")
 	}
-	
-}
 
+}
