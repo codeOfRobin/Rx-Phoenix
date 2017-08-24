@@ -11,6 +11,8 @@
 		424971651F4D834500A69EDF /* URL+StringExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424971641F4D834500A69EDF /* URL+StringExpressible.swift */; };
 		424971671F4D843500A69EDF /* Array+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424971661F4D843500A69EDF /* Array+Shuffle.swift */; };
 		424971691F4DE43100A69EDF /* AvatarStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424971681F4DE43100A69EDF /* AvatarStubs.swift */; };
+		425359C21F4EAA1C00FEA2D1 /* VisibilitySubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425359C11F4EAA1C00FEA2D1 /* VisibilitySubscription.swift */; };
+		425359C41F4EADE300FEA2D1 /* SubscriptionReferenceCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425359C31F4EADE300FEA2D1 /* SubscriptionReferenceCounter.swift */; };
 		426C06E91F4D61B800C2C477 /* AvatarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C06E71F4D61B800C2C477 /* AvatarNode.swift */; };
 		426C06EA1F4D61B800C2C477 /* ImageCacheHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C06E81F4D61B800C2C477 /* ImageCacheHandler.swift */; };
 		42BCF2601F4CA69C001FD302 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BCF25F1F4CA69C001FD302 /* AppDelegate.swift */; };
@@ -24,6 +26,8 @@
 		424971641F4D834500A69EDF /* URL+StringExpressible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringExpressible.swift"; sourceTree = "<group>"; };
 		424971661F4D843500A69EDF /* Array+Shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Shuffle.swift"; sourceTree = "<group>"; };
 		424971681F4DE43100A69EDF /* AvatarStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStubs.swift; sourceTree = "<group>"; };
+		425359C11F4EAA1C00FEA2D1 /* VisibilitySubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilitySubscription.swift; sourceTree = "<group>"; };
+		425359C31F4EADE300FEA2D1 /* SubscriptionReferenceCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionReferenceCounter.swift; sourceTree = "<group>"; };
 		426C06E71F4D61B800C2C477 /* AvatarNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarNode.swift; sourceTree = "<group>"; };
 		426C06E81F4D61B800C2C477 /* ImageCacheHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheHandler.swift; sourceTree = "<group>"; };
 		42BCF25C1F4CA69C001FD302 /* Avatars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avatars.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,12 +84,14 @@
 		42BCF25E1F4CA69C001FD302 /* Avatars */ = {
 			isa = PBXGroup;
 			children = (
+				425359C11F4EAA1C00FEA2D1 /* VisibilitySubscription.swift */,
 				424971641F4D834500A69EDF /* URL+StringExpressible.swift */,
 				42BCF25F1F4CA69C001FD302 /* AppDelegate.swift */,
 				42BCF2611F4CA69C001FD302 /* ViewController.swift */,
 				424971681F4DE43100A69EDF /* AvatarStubs.swift */,
 				424971661F4D843500A69EDF /* Array+Shuffle.swift */,
 				426C06E71F4D61B800C2C477 /* AvatarNode.swift */,
+				425359C31F4EADE300FEA2D1 /* SubscriptionReferenceCounter.swift */,
 				426C06E81F4D61B800C2C477 /* ImageCacheHandler.swift */,
 				42BCF2631F4CA69C001FD302 /* Main.storyboard */,
 				42BCF2661F4CA69C001FD302 /* Assets.xcassets */,
@@ -228,9 +234,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				424971691F4DE43100A69EDF /* AvatarStubs.swift in Sources */,
+				425359C41F4EADE300FEA2D1 /* SubscriptionReferenceCounter.swift in Sources */,
 				426C06E91F4D61B800C2C477 /* AvatarNode.swift in Sources */,
 				424971671F4D843500A69EDF /* Array+Shuffle.swift in Sources */,
 				42BCF2621F4CA69C001FD302 /* ViewController.swift in Sources */,
+				425359C21F4EAA1C00FEA2D1 /* VisibilitySubscription.swift in Sources */,
 				42BCF2601F4CA69C001FD302 /* AppDelegate.swift in Sources */,
 				424971651F4D834500A69EDF /* URL+StringExpressible.swift in Sources */,
 				426C06EA1F4D61B800C2C477 /* ImageCacheHandler.swift in Sources */,

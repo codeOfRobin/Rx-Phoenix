@@ -13,9 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
+	var counter = 0
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		
+		NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "createdCell"), object: nil, queue: .main) { (notification) in
+			self.counter += 1
+			print("cell created: \(self.counter)")
+		}
 		return true
 	}
 

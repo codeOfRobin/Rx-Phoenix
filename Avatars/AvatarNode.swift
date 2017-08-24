@@ -60,7 +60,7 @@ class AvatarNode: ASCellNode {
 	
 	let imageNode = ASNetworkImageNode()
 	let onlineNode = ASDisplayNode()
-	let initials: String
+	let id: Int
 	
 	var sizeClass: AvatarSizeClass
 	
@@ -71,37 +71,49 @@ class AvatarNode: ASCellNode {
 	}
 	
 	let disposeBag = DisposeBag()
+	let subscriptionCounter: SubscriptionReferenceCounter?
+	let onlineSubscription: PublishSubject<OnlineState>?
+	let avatar: Avatar
 	
-	
-	init(_ avatar: Avatar, sizeClass: AvatarSizeClass, initials: String, subscription: PublishSubject<OnlineState>? = nil) {
-		self.initials = initials
+	init(_ avatar: Avatar, sizeClass: AvatarSizeClass, id: Int, onlineSubscription: PublishSubject<OnlineState>? = nil, subscriptionCounter: SubscriptionReferenceCounter? = nil) {
+		self.id = id
 		self.sizeClass = sizeClass
+		self.subscriptionCounter = subscriptionCounter
+		self.onlineSubscription = onlineSubscription
+		self.avatar = avatar
 		super.init()
+		
+		self.imageNode.style.width = ASDimensionMake(sizeClass.preferredEdgeLength)
+		self.imageNode.style.height = ASDimensionMake(sizeClass.preferredEdgeLength)
+
+	}
+	
+	override func didLoad() {
+		super.didLoad()
+		
 		self.addSubnode(imageNode)
 		self.addSubnode(onlineNode)
 		onlineNode.backgroundColor = UIColor(red:0.32, green:0.67, blue:0.38, alpha:1.00)
 		onlineNode.layer.borderColor = UIColor.white.cgColor
-		self.setAvatar(avatar, sizeClass: sizeClass)
 		
-		if let subscription = subscription {
+		self.setAvatar(avatar)
+		
+		if let subscription = onlineSubscription {
 			subscription.subscribe(onNext: { [weak self] (state) in
 				self?.state = state
-			}, onDisposed: {
-				print("disposed")
+				}, onDisposed: {
+					print("disposed")
 			}).disposed(by: disposeBag)
 		}
 	}
 	
-	func setAvatar(_ avatar: Avatar, sizeClass: AvatarSizeClass) {
-		self.sizeClass = sizeClass
+	func setAvatar(_ avatar: Avatar) {
 		switch avatar {
 		case .image(let image):
 			imageNode.image = image
 		case .url(let url):
 			imageNode.setImageURL(url)
 		}
-		
-		self.imageNode.style.preferredSize = CGSize(width: sizeClass.preferredEdgeLength, height: sizeClass.preferredEdgeLength)
 		
 	}
 	
@@ -126,8 +138,9 @@ class AvatarNode: ASCellNode {
 		}
 	}
 	
-	override func layoutDidFinish() {
-		super.layoutDidFinish()
+	override func layout() {
+		super.layout()
+		
 		onlineNode.layer.cornerRadius = sizeClass.preferredOnlineIndicatorSize/2
 		onlineNode.layer.borderWidth = 2.0
 		onlineNode.frame = CGRect(x: imageNode.frame.maxX - sizeClass.preferredOnlineIndicatorSize/2, y: imageNode.frame.maxY - sizeClass.preferredOnlineIndicatorSize/2, width: sizeClass.preferredOnlineIndicatorSize, height: sizeClass.preferredOnlineIndicatorSize)
@@ -135,28 +148,17 @@ class AvatarNode: ASCellNode {
 	
 	override func didEnterPreloadState() {
 		super.didEnterPreloadState()
+		subscriptionCounter?.increment(id: id)
 	}
 	
-	override func didEnterVisibleState() {
-		super.didEnterVisibleState()
-		
-//		let timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] (timer) in
-//			if let state = self?.state {
-//				switch state {
-//				case .offline:
-//					self?.state = .online
-//				case .online:
-//					self?.state = .offline
-//				}
-//			}
-//		}
+	override func didExitPreloadState() {
+		subscriptionCounter?.decrement(id: id)
 	}
 	
-	
-	override func didExitHierarchy() {
-		super.didExitHierarchy()
-		self.state = .offline
+	deinit {
+		subscriptionCounter?.decrement(id: id)
 	}
+	
 }
 
 

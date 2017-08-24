@@ -26,7 +26,10 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 		}
 	}
 	
+	let disposeBag = DisposeBag()
+	
 	var onlineObservers: [Int: PublishSubject<OnlineState>] = [:]
+	let subscriptionCounter = SubscriptionReferenceCounter()
 	
 	let avatarStubs: [AvatarStub] = {
 		return (globalAvatarStore.reduce([], { (arr, pair) -> [AvatarStub] in
@@ -44,11 +47,22 @@ class ViewController: UIViewController, ASTableDataSource, ASTableDelegate {
 		tableNode.view.separatorStyle = .none
 		
 		tableNode.leadingScreensForBatching = 2.0
+		
+		subscriptionCounter.subscriptionBroadcast.debounce(3, scheduler: MainScheduler()).subscribe(onNext: { (ids) in
+			print(ids)
+		}, onDisposed: {
+			print("disposed")
+		}).disposed(by: disposeBag)
+		
 		// Do any additional setup after loading the view, typically from a nib.
 	}
 	
 	func tableNode(_ tableNode: ASTableNode, nodeForRowAt indexPath: IndexPath) -> ASCellNode {
-		return AvatarNode(.url(avatarStubs[indexPath.row].url), sizeClass: sizeClassToDisplay, initials: avatarStubs[indexPath.row].initials, subscription: onlineObservers[avatarStubs[indexPath.row].id])
+		let avatar: Avatar = .url(avatarStubs[indexPath.row].url)
+		let id = avatarStubs[indexPath.row].id
+		let subscription = onlineObservers[indexPath.row]
+		
+		return AvatarNode(avatar, sizeClass: sizeClassToDisplay, id: id, onlineSubscription: subscription, subscriptionCounter: self.subscriptionCounter)
 	}
 	
 	func numberOfSections(in tableNode: ASTableNode) -> Int {
